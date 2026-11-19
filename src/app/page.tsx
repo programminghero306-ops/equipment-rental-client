@@ -1,21 +1,31 @@
 "use client";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
 export default function Home() {
-  const [status, setStatus] = useState<string>("Checking server...");
-
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/health`)
-      .then((res) => res.json())
-      .then((data) => setStatus(data.message))
-      .catch(() => setStatus("Could not reach server"));
-  }, []);
+  const { data: session, isPending } = authClient.useSession();
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center gap-4">
       <h1 className="text-3xl font-bold">Equipment Rental Platform</h1>
-      <p>Server status: {status}</p>
-      <button className="btn btn-primary">DaisyUI works</button>
+
+      {isPending ? (
+        <p>Loading...</p>
+      ) : session ? (
+        <>
+          <p>Logged in as: {session.user.name}</p>
+          <p>Email: {session.user.email}</p>
+          <p>Role: {session.user.role}</p>
+          <button className="btn btn-error" onClick={() => authClient.signOut()}>
+            Logout
+          </button>
+        </>
+      ) : (
+        <div className="flex gap-3">
+          <Link href="/login" className="btn btn-primary">Login</Link>
+          <Link href="/register" className="btn btn-outline">Register</Link>
+        </div>
+      )}
     </main>
   );
 }
