@@ -100,7 +100,8 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-neutral-content/10 py-5 text-center text-sm text-neutral-content/60">
-      © 2026 {SITE_NAME}. All rights reserved.
+        © 2026 {SITE_NAME}. All rights reserved.
+      </div>
     </footer>
   );
 }
