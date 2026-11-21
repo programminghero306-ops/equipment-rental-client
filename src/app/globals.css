@@ -1,13 +1,8 @@
 @import "tailwindcss";
 
-@plugin "daisyui" {
-  themes: light --default;
-}
+@plugin "daisyui";
 
-@plugin "daisyui/theme" {
-  name: "rentlight";
-  default: true;
-  prefersdark: false;
+[data-theme="rentlight"] {
   color-scheme: light;
 
   --color-base-100: oklch(99% 0.003 90);
