@@ -2,7 +2,11 @@ import { authClient } from "./auth-client";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export async function apiFetch(path: string, options: RequestInit = {}) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function apiFetch<T = any>(
+  path: string,
+  options: RequestInit = {}
+): Promise<T> {
   const { data } = await authClient.token();
   const token = data?.token;
 
@@ -15,5 +19,9 @@ export async function apiFetch(path: string, options: RequestInit = {}) {
     },
   });
 
-  return res.json();
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(body.message || "Request failed");
+  }
+  return body as T;
 }
