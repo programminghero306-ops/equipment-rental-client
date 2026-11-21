@@ -10,7 +10,10 @@ const unitName = { Daily: "day", Weekly: "week", Monthly: "month" };
 export default function EquipmentCard({ item }: { item: Equipment }) {
   const { data: session } = authClient.useSession();
   const available = item.quantity > 0;
-  const href = session ? `/equipment/${item._id}` : "/login";
+  const detailsPath = `/equipment/${item._id}`;
+const href = session
+  ? detailsPath
+  : `/login?redirect=${encodeURIComponent(detailsPath)}`;
 
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-box border border-base-300 bg-base-100 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
