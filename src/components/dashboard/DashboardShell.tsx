@@ -4,9 +4,9 @@ import { usePathname, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FaBars, FaHouse, FaRightFromBracket } from "react-icons/fa6";
 import Logo from "@/components/Logo";
+import ThemeToggle from "@/components/ThemeToggle";
 import { authClient } from "@/lib/auth-client";
 import { getMenu } from "./menu";
-import ThemeToggle from "@/components/ThemeToggle";
 
 export default function DashboardShell({
   children,
@@ -58,9 +58,9 @@ export default function DashboardShell({
           <h1 className="flex-1 truncate text-lg font-bold sm:text-xl">
             {current?.label ?? "Dashboard"}
           </h1>
+
           <div className="flex items-center gap-3">
             <ThemeToggle />
-          <div className="flex items-center gap-3">
             <div className="hidden text-right sm:block">
               <p className="text-sm font-semibold leading-tight">{name}</p>
               <p className="text-xs capitalize text-base-content/60">{role}</p>

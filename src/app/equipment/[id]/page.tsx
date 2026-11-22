@@ -2,22 +2,20 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import toast from "react-hot-toast";
-import FavoriteButton from "@/components/FavoriteButton";
 import {
   FaArrowLeft,
   FaCalendarCheck,
   FaEnvelope,
   FaLocationDot,
-  FaRegHeart,
   FaUser,
 } from "react-icons/fa6";
 import BookingModal from "@/components/BookingModal";
+import FavoriteButton from "@/components/FavoriteButton";
 import PrivateRoute from "@/components/PrivateRoute";
+import RelatedEquipment from "@/components/RelatedEquipment";
 import { apiFetch } from "@/lib/api";
 import { authClient } from "@/lib/auth-client";
 import type { Equipment } from "@/lib/types";
-import RelatedEquipment from "@/components/RelatedEquipment";
 
 const unitName = { Daily: "day", Weekly: "week", Monthly: "month" };
 
@@ -156,9 +154,7 @@ function Details() {
             >
               <FaCalendarCheck /> Book Now
             </button>
-            {/* TODO: favorites are connected in the Favorites step */}
-            <FavoriteButton equipmentId={item.id} enabled={canBook} />
-          </div>
+            <FavoriteButton equipmentId={item._id} enabled={canBook} />
           </div>
 
           {!canBook && (
@@ -197,7 +193,9 @@ function Details() {
           </ul>
         </div>
       </div>
+
       <RelatedEquipment category={item.category} currentId={item._id} />
+
       <BookingModal
         item={item}
         open={showBooking}

@@ -1,5 +1,6 @@
 import Banner from "@/components/home/Banner";
 import Categories from "@/components/home/Categories";
+import Faq from "@/components/home/Faq";
 import FeaturedEquipment from "@/components/home/FeaturedEquipment";
 import HowItWorks from "@/components/home/HowItWorks";
 import OwnerCta from "@/components/home/OwnerCta";
@@ -21,6 +22,7 @@ export default async function Home() {
       <WhyChooseUs />
       <HowItWorks />
       <Reviews reviews={reviews} />
+      <Faq />
       <OwnerCta />
     </>
   );
