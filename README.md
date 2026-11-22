@@ -46,6 +46,11 @@ Create a file named .env.local with these names (see .env.example):
 - GOOGLE_CLIENT_SECRET
 - NEXT_PUBLIC_IMGBB_KEY
 
+For Google sign-in, set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in the
+deployment environment. Add this authorized redirect URI to the Google OAuth
+Web client:
+`https://equipment-rental-client-lovat.vercel.app/api/auth/callback/google`
+
 ## Run locally
     npm install
     npm run dev
