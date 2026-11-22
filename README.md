@@ -1,92 +1,56 @@
-# Equipment Rental Platform (Client)
+# GearHive - Equipment Rental Platform
 
-A modern, full-stack equipment rental and sharing marketplace built with **Next.js 16**, **React 19**, **Tailwind CSS**, **DaisyUI**, and **Better-Auth**.
+## Purpose
+GearHive is a rental marketplace that connects equipment owners and customers. Owners list their equipment, customers search, book and pay securely online, and administrators approve listings and monitor the whole platform.
 
----
+## Live links
+- Live site: https://equipment-rental-client-lovat.vercel.app
+- Server API: https://equipment-rental-server-murex.vercel.app
+- Server repository: https://github.com/programminghero306-ops/equipment-rental-server
 
-## 🚀 Live Demo & Deployment
+## Key features
+- Email and password registration with password rules (uppercase, lowercase, minimum 6 characters) and Google login
+- JWT-based authentication and role-based access control for Customer, Owner and Admin
+- Home page with animated banner and search, featured equipment, categories, why choose us, how it works, customer reviews and FAQ
+- All Equipment page with server-side search, category, rental type, price and availability filters, sorting and pagination
+- Private equipment details page with owner information and rental terms
+- Booking with date range, quantity, live price calculation and date-based availability checking
+- Stripe Checkout payments, payment records and a payment success page
+- Favorites list for customers
+- Customer dashboard: My Rentals (pay later or cancel unpaid bookings), Favorites, Profile
+- Owner dashboard: Add Equipment with image upload, My Equipment (update, delete, view), My Equipment Rental, analytics charts
+- Admin dashboard: user and role management, equipment approve and reject, all rentals management, analytics charts
+- Dark and light mode that is remembered, fully responsive layout, loading, error and 404 pages, Framer Motion animations
 
-- **Live Client URL:** [https://equipment-rental-client.vercel.app](https://equipment-rental-client.vercel.app) *(Replace with your deployed URL)*
-- **Server API URL:** [https://equipment-rental-server.vercel.app](https://equipment-rental-server.vercel.app) *(Replace with your deployed URL)*
+## Technologies
+Next.js (App Router), TypeScript, Tailwind CSS, DaisyUI, BetterAuth with the MongoDB adapter, Express.js, MongoDB, Stripe
 
----
+## npm packages (client)
+- next, react, react-dom
+- tailwindcss, @tailwindcss/postcss, daisyui
+- better-auth
+- mongodb
+- framer-motion
+- recharts
+- react-hot-toast
+- sweetalert2
+- react-icons
 
-## 🛠️ Tech Stack
+## Environment variables
+Create a file named .env.local with these names (see .env.example):
+- NEXT_PUBLIC_API_URL
+- MONGODB_URI
+- BETTER_AUTH_SECRET
+- BETTER_AUTH_URL
+- GOOGLE_CLIENT_ID
+- GOOGLE_CLIENT_SECRET
+- NEXT_PUBLIC_IMGBB_KEY
 
-- **Framework:** Next.js 16.4 (App Router, Turbopack)
-- **UI Library:** React 19, Tailwind CSS v4, DaisyUI v5
-- **Icons & Animations:** React Icons, Framer Motion
-- **Authentication:** Better-Auth (MongoDB Adapter, JWT plugin)
-- **Notifications & Modals:** React Hot Toast, SweetAlert2
-- **Data Visualization:** Recharts
-- **Image Hosting:** ImgBB API
+## Run locally
+    npm install
+    npm run dev
 
----
+The app runs at http://localhost:3000 and needs the server project running too.
 
-## ✨ Key Features
-
-- **Role-Based Access Control (RBAC):**
-  - **Customer / Renter:** Browse equipment, filter by category/price, submit rental requests, bookmark favorites, leave ratings & reviews.
-  - **Equipment Owner:** Post new equipment listings with multi-image uploads, manage listings, approve or reject rental requests.
-  - **Admin:** Moderate all equipment listings, oversee all user rentals, manage registered users and platform metrics.
-- **Advanced Catalog Search & Filters:**
-  - Real-time text search, category tabs, availability filters, and ascending/descending price sorting.
-- **Secure Authentication & Token Flow:**
-  - JWT integration via Better-Auth passing Bearer tokens to the Express API.
-- **Responsive Dashboard:**
-  - Dedicated layouts for My Rentals, Equipment Rentals, Add Equipment, and Favorites.
-
----
-
-## 🔑 Environment Variables Setup
-
-Create a `.env.local` file in the root directory:
-
-```env
-# Backend API URL (Use localhost for dev, Vercel URL for production)
-NEXT_PUBLIC_API_URL=https://equipment-rental-server.vercel.app
-
-# MongoDB Connection String (shared with Better-Auth)
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/equipmentRental
-
-# Better Auth Configuration
-BETTER_AUTH_SECRET=your_32_character_random_secret_here
-BETTER_AUTH_URL=https://equipment-rental-client.vercel.app
-
-# ImgBB API Key for Equipment Image Uploads
-NEXT_PUBLIC_IMGBB_KEY=your_imgbb_api_key
-```
-
----
-
-## 💻 Local Development
-
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-2. **Run development server:**
-   ```bash
-   npm run dev
-   ```
-
-3. **Build for production:**
-   ```bash
-   npm run build
-   ```
-
-4. **Start production server:**
-   ```bash
-   npm start
-   ```
-
----
-
-## 📋 Vercel Deployment Guide
-
-1. Push your code to GitHub.
-2. Import the project into [Vercel](https://vercel.com).
-3. Set the **Framework Preset** to **Next.js**.
-4. Add the Environment Variables listed above under **Project Settings > Environment Variables**.
-5. Deploy!
+## Test payments
+Payments run in Stripe test mode. Use the card number 4242 4242 4242 4242, any future expiry date, any 3-digit CVC and any postal code.
