@@ -3,12 +3,24 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { FaGoogle } from "react-icons/fa";
 import { authClient } from "@/lib/auth-client";
 import { getRedirectPath } from "@/lib/utils";
 
 export default function LoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  async function handleGoogleLogin() {
+    setGoogleLoading(true);
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+      errorCallbackURL: "/login",
+      newUserCallbackURL: "/",
+    });
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -48,6 +60,18 @@ export default function LoginPage() {
 
           <button type="submit" disabled={loading} className="btn btn-primary mt-2">
             {loading ? "Logging in..." : "Login"}
+          </button>
+
+          <div className="divider text-sm">OR</div>
+
+          <button
+            type="button"
+            disabled={loading || googleLoading}
+            onClick={handleGoogleLogin}
+            className="btn btn-outline"
+          >
+            <FaGoogle />
+            {googleLoading ? "Connecting..." : "Continue with Google"}
           </button>
 
           <p className="text-sm text-center">

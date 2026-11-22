@@ -6,6 +6,10 @@ import { jwt } from "better-auth/plugins";
 const client = new MongoClient(process.env.MONGODB_URI as string);
 const db = client.db("equipmentRental");
 
+const googleEnabled =
+  Boolean(process.env.GOOGLE_CLIENT_ID) &&
+  Boolean(process.env.GOOGLE_CLIENT_SECRET);
+
 export const auth = betterAuth({
   database: mongodbAdapter(db),
   plugins: [jwt()],
@@ -13,6 +17,14 @@ export const auth = betterAuth({
     enabled: true,
     minPasswordLength: 6,
   },
+  socialProviders: googleEnabled
+    ? {
+        google: {
+          clientId: process.env.GOOGLE_CLIENT_ID as string,
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+        },
+      }
+    : {},
   user: {
     additionalFields: {
       role: {

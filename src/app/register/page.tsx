@@ -3,11 +3,23 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { FaGoogle } from "react-icons/fa";
 import { authClient } from "@/lib/auth-client";
 
 export default function RegisterPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  async function handleGoogleRegister() {
+    setGoogleLoading(true);
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+      errorCallbackURL: "/register",
+      newUserCallbackURL: "/",
+    });
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -51,7 +63,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="min-h-[75vh]flex items-center justify-center px-4 py-10">
+    <main className="min-h-[75vh] flex items-center justify-center px-4 py-10">
       <div className="card w-full max-w-md bg-base-200 shadow-xl">
         <form onSubmit={handleSubmit} className="card-body gap-3">
           <h1 className="text-2xl font-bold text-center">Create your account</h1>
@@ -78,6 +90,18 @@ export default function RegisterPage() {
 
           <button type="submit" disabled={loading} className="btn btn-primary mt-2">
             {loading ? "Creating account..." : "Register"}
+          </button>
+
+          <div className="divider text-sm">OR</div>
+
+          <button
+            type="button"
+            disabled={loading || googleLoading}
+            onClick={handleGoogleRegister}
+            className="btn btn-outline"
+          >
+            <FaGoogle />
+            {googleLoading ? "Connecting..." : "Continue with Google"}
           </button>
 
           <p className="text-sm text-center">
