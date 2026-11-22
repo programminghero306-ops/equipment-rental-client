@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
+import FavoriteButton from "@/components/FavoriteButton";
 import {
   FaArrowLeft,
   FaCalendarCheck,
@@ -16,6 +17,7 @@ import PrivateRoute from "@/components/PrivateRoute";
 import { apiFetch } from "@/lib/api";
 import { authClient } from "@/lib/auth-client";
 import type { Equipment } from "@/lib/types";
+import RelatedEquipment from "@/components/RelatedEquipment";
 
 const unitName = { Daily: "day", Weekly: "week", Monthly: "month" };
 
@@ -155,12 +157,8 @@ function Details() {
               <FaCalendarCheck /> Book Now
             </button>
             {/* TODO: favorites are connected in the Favorites step */}
-            <button
-              className="btn btn-outline btn-lg"
-              onClick={() => toast("Favorites are coming soon", { icon: "🛠️" })}
-            >
-              <FaRegHeart /> Add to Favorites
-            </button>
+            <FavoriteButton equipmentId={item.id} enabled={canBook} />
+          </div>
           </div>
 
           {!canBook && (
@@ -199,7 +197,7 @@ function Details() {
           </ul>
         </div>
       </div>
-
+      <RelatedEquipment category={item.category} currentId={item._id} />
       <BookingModal
         item={item}
         open={showBooking}
