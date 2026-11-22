@@ -13,12 +13,26 @@ export default function RegisterPage() {
 
   async function handleGoogleRegister() {
     setGoogleLoading(true);
-    await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/",
-      errorCallbackURL: "/register",
-      newUserCallbackURL: "/",
-    });
+    try {
+      const { error } = await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+        errorCallbackURL: "/register",
+        newUserCallbackURL: "/",
+      });
+
+      if (error) {
+        toast.error(
+          error.message === "Provider not found"
+            ? "Google sign-in is not configured yet. Please try again later."
+            : error.message || "Could not connect to Google"
+        );
+      }
+    } catch {
+      toast.error("Could not connect to Google. Please try again.");
+    } finally {
+      setGoogleLoading(false);
+    }
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
