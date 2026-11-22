@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import EquipmentExplorer from "@/components/EquipmentExplorer";
-
+import FavoriteButton from "@/components/FavoriteButton";
 export const metadata: Metadata = {
   title: "All Equipment",
 };
