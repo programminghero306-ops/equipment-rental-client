@@ -8,7 +8,6 @@ const db = client.db("equipmentRental");
 
 export const auth = betterAuth({
   database: mongodbAdapter(db),
-    database: mongodbAdapter(db),
   plugins: [jwt()],
   emailAndPassword: {
     enabled: true,
