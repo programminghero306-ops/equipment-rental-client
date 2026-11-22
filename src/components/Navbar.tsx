@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { FaBars } from "react-icons/fa6";
 import { authClient } from "@/lib/auth-client";
 import Logo from "./Logo";
+import ThemeToggle from "./ThemeToggle";
 
 const links = [
   { href: "/", label: "Home" },
@@ -93,41 +94,44 @@ export default function Navbar() {
           <ul className="menu menu-horizontal gap-1 px-1">{navLinks}</ul>
         </div>
 
-        {/* Right: desktop auth buttons */}
-        <div className="navbar-end hidden gap-2 lg:flex">
-          {isPending ? (
-            <span className="loading loading-dots loading-sm" />
-          ) : session ? (
-            <>
-              {userImage ? (
-                <img
-                  src={userImage}
-                  alt={session.user.name}
-                  className="h-9 w-9 rounded-full border border-base-300 object-cover"
-                  onError={(e) => (e.currentTarget.style.display = "none")}
-                />
-              ) : (
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-secondary font-bold text-secondary-content">
-                  {session.user.name.charAt(0).toUpperCase()}
-                </span>
-              )}
-              <Link href="/dashboard" className="btn btn-primary btn-sm">
-                Dashboard
-              </Link>
-              <button onClick={handleLogout} className="btn btn-outline btn-sm">
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link href="/login" className="btn btn-ghost btn-sm">
-                Login
-              </Link>
-              <Link href="/register" className="btn btn-primary btn-sm">
-                Register
-              </Link>
-            </>
-          )}
+        {/* Right: theme toggle + desktop auth buttons */}
+        <div className="navbar-end gap-2">
+          <ThemeToggle />
+          <div className="hidden items-center gap-2 lg:flex">
+            {isPending ? (
+              <span className="loading loading-dots loading-sm" />
+            ) : session ? (
+              <>
+                {userImage ? (
+                  <img
+                    src={userImage}
+                    alt={session.user.name}
+                    className="h-9 w-9 rounded-full border border-base-300 object-cover"
+                    onError={(e) => (e.currentTarget.style.display = "none")}
+                  />
+                ) : (
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-secondary font-bold text-secondary-content">
+                    {session.user.name.charAt(0).toUpperCase()}
+                  </span>
+                )}
+                <Link href="/dashboard" className="btn btn-primary btn-sm">
+                  Dashboard
+                </Link>
+                <button onClick={handleLogout} className="btn btn-outline btn-sm">
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="btn btn-ghost btn-sm">
+                  Login
+                </Link>
+                <Link href="/register" className="btn btn-primary btn-sm">
+                  Register
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>

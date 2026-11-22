@@ -3,6 +3,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaCalendarCheck, FaShieldHalved, FaUserCheck } from "react-icons/fa6";
 import { container, fadeUp } from "@/lib/motion";
+import HeroSearch from "./HeroSearch";
 
 const highlights = [
   { icon: FaUserCheck, title: "Verified owners", text: "Every listing is reviewed before it goes live." },
@@ -37,6 +38,7 @@ export default function Banner() {
             From excavators to cameras, find trusted equipment from verified
             owners near you. Book online, pay securely and get to work.
           </p>
+                    <HeroSearch />
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/equipment" className="btn btn-primary btn-lg">
               Browse Equipment
