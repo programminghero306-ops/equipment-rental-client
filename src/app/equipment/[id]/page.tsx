@@ -11,20 +11,24 @@ import {
   FaRegHeart,
   FaUser,
 } from "react-icons/fa6";
+import BookingModal from "@/components/BookingModal";
 import PrivateRoute from "@/components/PrivateRoute";
 import { apiFetch } from "@/lib/api";
+import { authClient } from "@/lib/auth-client";
 import type { Equipment } from "@/lib/types";
 
 const unitName = { Daily: "day", Weekly: "week", Monthly: "month" };
 
 function Details() {
   const { id } = useParams<{ id: string }>();
+  const { data: session } = authClient.useSession();
   const [item, setItem] = useState<Equipment | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showBooking, setShowBooking] = useState(false);
 
   useEffect(() => {
     let ignore = false;
-    apiFetch(`/equipment/${id}`)
+    apiFetch<Equipment>(`/equipment/${id}`)
       .then((data) => {
         if (!ignore) setItem(data?._id ? data : null);
       })
@@ -68,6 +72,7 @@ function Details() {
   }
 
   const available = item.quantity > 0;
+  const canBook = session?.user.role === "customer";
 
   const facts = [
     ["Category", item.category],
@@ -142,11 +147,10 @@ function Details() {
           </dl>
 
           <div className="flex flex-wrap gap-3">
-            {/* TODO: the booking modal and Stripe are connected in the Booking step */}
             <button
               className="btn btn-primary btn-lg flex-1"
-              disabled={!available}
-              onClick={() => toast("Booking opens in the next steps", { icon: "🛠️" })}
+              disabled={!available || !canBook}
+              onClick={() => setShowBooking(true)}
             >
               <FaCalendarCheck /> Book Now
             </button>
@@ -158,6 +162,12 @@ function Details() {
               <FaRegHeart /> Add to Favorites
             </button>
           </div>
+
+          {!canBook && (
+            <p className="text-sm text-base-content/60">
+              Only customer accounts can book equipment.
+            </p>
+          )}
         </div>
       </div>
 
@@ -189,6 +199,12 @@ function Details() {
           </ul>
         </div>
       </div>
+
+      <BookingModal
+        item={item}
+        open={showBooking}
+        onClose={() => setShowBooking(false)}
+      />
     </div>
   );
 }
